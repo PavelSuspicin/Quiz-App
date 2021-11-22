@@ -12,7 +12,7 @@ const quizData = [
     a: 'JAVA',
     b: 'C',
     c: 'Python',
-    d: 'JaveScript',
+    d: 'JavaScript',
     correct: 'd',
   },
   {
@@ -25,7 +25,7 @@ const quizData = [
   },
   {
     question: 'What does HTML stand for?',
-    a: 'Hypertxt Markup Language',
+    a: 'Hypertext Markup Language',
     b: 'Cascading Style Sheet',
     c: 'Jason Object Notation',
     d: 'Application Programing Interface',
@@ -43,12 +43,12 @@ const quizData = [
 
 const quiz = document.getElementById('quiz');
 const answerEls = document.querySelectorAll('.answer');
-const questionEl = document.getElementById('question');
+const submitBtn = document.getElementById('submit');
+const question = document.getElementById('question');
 const a_text = document.getElementById('a_text');
 const b_text = document.getElementById('b_text');
 const c_text = document.getElementById('c_text');
 const d_text = document.getElementById('d_text');
-const submitBtn = document.getElementById('submit');
 
 let currentQuiz = 0;
 let score = 0;
@@ -57,25 +57,22 @@ loadQuiz();
 
 function loadQuiz() {
   deselectAnswers();
-
   const currentQuizData = quizData[currentQuiz];
 
-  questionEl.innerText = currentQuizData.question;
+  question.innerText = currentQuizData.question;
   a_text.innerText = currentQuizData.a;
   b_text.innerText = currentQuizData.b;
   c_text.innerText = currentQuizData.c;
   d_text.innerText = currentQuizData.d;
 }
 
-function getSelected() {
+function selectAnswer() {
   let answer = undefined;
-
   answerEls.forEach(answerEl => {
     if (answerEl.checked) {
       answer = answerEl.id;
     }
   });
-
   return answer;
 }
 
@@ -86,7 +83,7 @@ function deselectAnswers() {
 }
 
 submitBtn.addEventListener('click', () => {
-  const answer = getSelected();
+  const answer = selectAnswer();
 
   if (answer) {
     if (answer === quizData[currentQuiz].correct) {
@@ -96,9 +93,9 @@ submitBtn.addEventListener('click', () => {
     if (currentQuiz < quizData.length) {
       loadQuiz();
     } else {
-      quiz.innerHTML = `<h2>${score}/${quizData.length} questions.</h2>
-      
-      <button onclick='location.reload()'>Reload</button>`;
+      quiz.innerHTML = `<h2>You answered correctly at ${score}/${quizData.length} questins.
+      <button onclick='location.reload()'>Reload</button>
+      `;
     }
   }
 });
